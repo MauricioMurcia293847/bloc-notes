@@ -70,7 +70,7 @@
 - [x] Imagenes en notas.
 - [x] Miniaturas en Home/Busqueda.
 - [ ] Build Android.
-- [ ] README final con capturas.
+- [x] README final con capturas.
 
 ## Fase 6 - Documentacion y GitHub
 
@@ -79,8 +79,8 @@
 - [x] Diagrama de arquitectura.
 - [x] Instrucciones completas de instalacion.
 - [x] Roadmap y pendientes actualizados.
-- [ ] Primer commit organizado.
-- [ ] Repositorio remoto en GitHub.
+- [x] Primer commit organizado.
+- [x] Repositorio remoto en GitHub.
 
 ## Fase 7 - Testing y build
 

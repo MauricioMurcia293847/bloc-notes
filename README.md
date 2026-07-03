@@ -20,7 +20,7 @@ Fases completadas funcionalmente:
 
 Fase actual:
 
-- Fase 6: Documentacion y GitHub.
+- Fase 7: Testing y build Android.
 
 ## Caracteristicas
 
@@ -276,7 +276,7 @@ Flujos validados manualmente:
 
 Siguiente fase:
 
-- Fase 6: README final con capturas reales, diagrama, documentacion completa y GitHub.
+- Fase 7: pruebas adicionales, build Android APK/AAB y revision final.
 
 Despues:
 
@@ -291,4 +291,5 @@ Pendientes funcionales futuros:
 
 ## Licencia
 
-Proyecto en desarrollo. La licencia se definira antes de publicarlo en GitHub.
+Este proyecto esta publicado bajo licencia MIT. Consulta el archivo
+[`LICENSE`](LICENSE) para ver los terminos completos.
