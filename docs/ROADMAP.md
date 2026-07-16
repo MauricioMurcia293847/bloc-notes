@@ -86,6 +86,6 @@
 
 - [ ] Pruebas unitarias de modelos/repositorios.
 - [ ] Pruebas adicionales de UI.
-- [ ] Build APK.
-- [ ] Build AAB.
-- [ ] Revision final en emulador/dispositivo.
+- [x] Build APK.
+- [x] Build AAB.
+- [x] Revision final en emulador/dispositivo.
