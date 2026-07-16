@@ -11,6 +11,14 @@ void main() {
 
     await tester.tap(find.text('Siguiente'));
     await tester.pumpAndSettle();
+    expect(find.text('Organiza sin esfuerzo'), findsOneWidget);
+
+    await tester.tap(find.text('Siguiente'));
+    await tester.pumpAndSettle();
+    expect(find.text('Listas e imagenes'), findsOneWidget);
+
+    await tester.tap(find.text('Comenzar'));
+    await tester.pumpAndSettle();
     expect(find.text('Bienvenido de nuevo'), findsOneWidget);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Iniciar sesion').last);

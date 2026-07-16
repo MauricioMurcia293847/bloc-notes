@@ -27,6 +27,8 @@ Thumbs.db
 # Local generated files
 tmp/
 *.log
+release/*.apk
+release/*.aab
 
 # Android / iOS generated artifacts
 android/.gradle/

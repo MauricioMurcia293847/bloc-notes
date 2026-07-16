@@ -3,13 +3,45 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_colors.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
 
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final _pageController = PageController();
+  int _currentPage = 0;
+
+  static const _pages = [
+    _OnboardingPageData(
+      icon: Icons.edit_note_rounded,
+      title: 'Tus ideas, en calma',
+      body:
+          'Un espacio tranquilo para escribir notas y capturar lo que piensas.',
+    ),
+    _OnboardingPageData(
+      icon: Icons.dashboard_customize_rounded,
+      title: 'Organiza sin esfuerzo',
+      body:
+          'Filtra por carpetas, fija lo importante y encuentra tus notas rapido.',
+    ),
+    _OnboardingPageData(
+      icon: Icons.checklist_rounded,
+      title: 'Listas e imagenes',
+      body: 'Crea checklists, agrega imagenes y conserva todo sincronizado.',
+    ),
+  ];
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -24,47 +56,34 @@ class OnboardingScreen extends StatelessWidget {
                   child: const Text('Saltar'),
                 ),
               ),
-              const Spacer(),
-              Center(
-                child: Container(
-                  width: 148,
-                  height: 148,
-                  decoration: BoxDecoration(
-                    color: AppColors.paperMuted,
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  child: const Icon(
-                    Icons.edit_note_rounded,
-                    color: AppColors.sage,
-                    size: 58,
-                  ),
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() => _currentPage = index);
+                  },
+                  itemCount: _pages.length,
+                  itemBuilder: (context, index) {
+                    return _OnboardingPage(page: _pages[index]);
+                  },
                 ),
               ),
-              const SizedBox(height: 38),
-              Text(
-                'Tus ideas, en calma',
-                textAlign: TextAlign.center,
-                style: textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Un espacio tranquilo para escribir notas y capturar lo que piensas.',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyLarge?.copyWith(color: AppColors.inkMuted),
-              ),
-              const SizedBox(height: 28),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  _StepDot(isActive: true),
-                  _StepDot(),
-                  _StepDot(),
+                children: [
+                  for (var index = 0; index < _pages.length; index++)
+                    _StepDot(
+                      isActive: index == _currentPage,
+                      onTap: () => _goToPage(index),
+                    ),
                 ],
               ),
-              const Spacer(flex: 2),
+              const SizedBox(height: 28),
               FilledButton(
-                onPressed: () => context.go('/auth'),
-                child: const Text('Siguiente'),
+                onPressed: _nextStep,
+                child: Text(
+                  _currentPage == _pages.length - 1 ? 'Comenzar' : 'Siguiente',
+                ),
               ),
               const SizedBox(height: 18),
               TextButton(
@@ -83,7 +102,7 @@ class OnboardingScreen extends StatelessWidget {
                     ],
                   ),
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ],
@@ -92,24 +111,96 @@ class OnboardingScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _goToPage(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 260),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _nextStep() {
+    if (_currentPage == _pages.length - 1) {
+      context.go('/auth');
+      return;
+    }
+
+    _goToPage(_currentPage + 1);
+  }
 }
 
 class _StepDot extends StatelessWidget {
-  const _StepDot({this.isActive = false});
+  const _StepDot({this.isActive = false, required this.onTap});
 
   final bool isActive;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
-      width: isActive ? 22 : 7,
-      height: 7,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-        color: isActive ? AppColors.sage : AppColors.paperMuted,
-        borderRadius: BorderRadius.circular(99),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(99),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        width: isActive ? 22 : 7,
+        height: 7,
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        decoration: BoxDecoration(
+          color: isActive ? AppColors.sage : AppColors.paperMuted,
+          borderRadius: BorderRadius.circular(99),
+        ),
       ),
     );
   }
+}
+
+class _OnboardingPage extends StatelessWidget {
+  const _OnboardingPage({required this.page});
+
+  final _OnboardingPageData page;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 148,
+          height: 148,
+          decoration: BoxDecoration(
+            color: AppColors.paperMuted,
+            borderRadius: BorderRadius.circular(28),
+          ),
+          child: Icon(page.icon, color: AppColors.sage, size: 58),
+        ),
+        const SizedBox(height: 38),
+        Text(
+          page.title,
+          textAlign: TextAlign.center,
+          style: textTheme.headlineMedium,
+        ),
+        const SizedBox(height: 16),
+        Text(
+          page.body,
+          textAlign: TextAlign.center,
+          style: textTheme.bodyLarge?.copyWith(color: AppColors.inkMuted),
+        ),
+      ],
+    );
+  }
+}
+
+class _OnboardingPageData {
+  const _OnboardingPageData({
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
 }

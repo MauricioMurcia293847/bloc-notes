@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/widgets/bloc_app_mark.dart';
+import 'auth_error_message.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -154,9 +155,9 @@ class _AuthScreenState extends State<AuthScreen> {
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                  onPressed: () => _setMessage(
-                    'Google se conectara en una fase posterior.',
-                  ),
+                    onPressed: () => _setMessage(
+                      'Google se conectara en una fase posterior.',
+                    ),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
                       shape: RoundedRectangleBorder(
@@ -170,9 +171,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton.icon(
-                  onPressed: () => _setMessage(
-                    'Apple se conectara en una fase posterior.',
-                  ),
+                    onPressed: () => _setMessage(
+                      'Apple se conectara en una fase posterior.',
+                    ),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
                       shape: RoundedRectangleBorder(
@@ -239,9 +240,9 @@ class _AuthScreenState extends State<AuthScreen> {
         }
       }
     } on AuthException catch (error) {
-      _setMessage(error.message, isError: true);
-    } catch (_) {
-      _setMessage('No se pudo conectar con Supabase.', isError: true);
+      _setMessage(friendlyAuthError(error), isError: true);
+    } catch (error) {
+      _setMessage(friendlyAuthError(error), isError: true);
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -282,9 +283,9 @@ class _AuthScreenState extends State<AuthScreen> {
       );
       _setMessage('Te enviamos instrucciones al correo.');
     } on AuthException catch (error) {
-      _setMessage(error.message, isError: true);
-    } catch (_) {
-      _setMessage('No se pudo enviar el correo.', isError: true);
+      _setMessage(friendlyAuthError(error), isError: true);
+    } catch (error) {
+      _setMessage(friendlyAuthError(error), isError: true);
     } finally {
       if (mounted) {
         setState(() => _isSendingReset = false);

@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../data/auth_state_controller.dart';
+import 'auth_error_message.dart';
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -101,9 +102,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
             const SizedBox(height: 22),
             FilledButton(
               onPressed: _isLoading ? null : _updatePassword,
-              child: Text(
-                _isLoading ? 'Guardando...' : 'Guardar contrasena',
-              ),
+              child: Text(_isLoading ? 'Guardando...' : 'Guardar contrasena'),
             ),
             const SizedBox(height: 12),
             TextButton(
@@ -118,13 +117,11 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
 
   Future<void> _updatePassword() async {
     if (Supabase.instance.client.auth.currentSession == null) {
-      setState(
-        () {
-          _message =
-              'Abre el enlace nuevo del correo para validar la recuperacion.';
-          _messageIsError = true;
-        },
-      );
+      setState(() {
+        _message =
+            'Abre el enlace nuevo del correo para validar la recuperacion.';
+        _messageIsError = true;
+      });
       return;
     }
 
@@ -132,12 +129,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     final confirmPassword = _confirmPasswordController.text;
 
     if (password.length < 6) {
-      setState(
-        () {
-          _message = 'La contrasena debe tener al menos 6 caracteres.';
-          _messageIsError = true;
-        },
-      );
+      setState(() {
+        _message = 'La contrasena debe tener al menos 6 caracteres.';
+        _messageIsError = true;
+      });
       return;
     }
 
@@ -166,12 +161,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       }
     } on AuthException catch (error) {
       setState(() {
-        _message = error.message;
+        _message = friendlyAuthError(error);
         _messageIsError = true;
       });
-    } catch (_) {
+    } catch (error) {
       setState(() {
-        _message = 'No se pudo actualizar la contrasena.';
+        _message = friendlyAuthError(error);
         _messageIsError = true;
       });
     } finally {

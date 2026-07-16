@@ -13,6 +13,7 @@ Estado actual:
 
 - `flutter analyze`: sin issues.
 - `flutter test`: pruebas actuales pasando.
+- `v1.0.1+2`: onboarding navegable, mensajes de red/auth mas claros.
 - APK release instalado y abierto correctamente en emulador Pixel 7.
 
 ## Firma local
@@ -49,7 +50,7 @@ build/app/outputs/flutter-apk/app-release.apk
 Build actual generado:
 
 ```text
-build/app/outputs/flutter-apk/app-release.apk
+release/bloc-notes-v1.0.1.apk
 ```
 
 ## Build para Play Store
@@ -69,8 +70,15 @@ build/app/outputs/bundle/release/app-release.aab
 Build actual generado:
 
 ```text
-build/app/outputs/bundle/release/app-release.aab
+release/bloc-notes-v1.0.1.aab
 ```
+
+## Nota sobre OneDrive
+
+Si Gradle falla con `AccessDeniedException` dentro de `build/`, normalmente es
+OneDrive bloqueando carpetas temporales. Para release, se puede copiar el
+proyecto a una carpeta temporal fuera de OneDrive, compilar ahi y traer de
+vuelta el APK/AAB final.
 
 ## Evidencia
 
