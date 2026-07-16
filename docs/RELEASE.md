@@ -13,7 +13,7 @@ Estado actual:
 
 - `flutter analyze`: sin issues.
 - `flutter test`: pruebas actuales pasando.
-- `v1.0.1+2`: onboarding navegable, mensajes de red/auth mas claros.
+- `v1.0.2+3`: confirmacion de email por deep link y contraste del editor en modo oscuro.
 - APK release instalado y abierto correctamente en emulador Pixel 7.
 
 ## Firma local
@@ -50,7 +50,7 @@ build/app/outputs/flutter-apk/app-release.apk
 Build actual generado:
 
 ```text
-release/bloc-notes-v1.0.1.apk
+release/bloc-notes-v1.0.2.apk
 ```
 
 ## Build para Play Store
@@ -70,7 +70,7 @@ build/app/outputs/bundle/release/app-release.aab
 Build actual generado:
 
 ```text
-release/bloc-notes-v1.0.1.aab
+release/bloc-notes-v1.0.2.aab
 ```
 
 ## Nota sobre OneDrive

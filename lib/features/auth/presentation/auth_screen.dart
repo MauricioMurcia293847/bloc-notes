@@ -228,9 +228,13 @@ class _AuthScreenState extends State<AuthScreen> {
       }
 
       if (_isSignUp) {
-        await auth.signUp(email: email, password: password);
+        await auth.signUp(
+          email: email,
+          password: password,
+          emailRedirectTo: 'blocnotes://auth-callback',
+        );
         _setMessage(
-          'Cuenta creada. Revisa tu correo si Supabase pide confirmar email.',
+          'Cuenta creada. Abre el correo de verificacion desde este celular.',
         );
         setState(() => _isSignUp = false);
       } else {

@@ -74,16 +74,20 @@ Para pruebas iniciales:
 3. Decide si se requiere confirmar email para desarrollo.
 4. Crea un usuario de prueba o registra uno desde la app cuando conectemos la UI.
 
-## 7. Deep link de recuperacion
+## 7. Deep links de Auth
 
 En Authentication > URL Configuration agrega:
 
 ```text
+blocnotes://auth-callback
 blocnotes://reset-password
 ```
 
-El correo de recuperacion debe abrirse desde el emulador/dispositivo para que
-Android enrute el enlace a la app.
+`blocnotes://auth-callback` se usa para confirmar el correo al crear cuenta.
+`blocnotes://reset-password` se usa para recuperacion de contrasena.
+
+Los correos deben abrirse desde el emulador/dispositivo para que Android enrute
+el enlace a la app.
 
 ## 8. Verificar usuario creado
 

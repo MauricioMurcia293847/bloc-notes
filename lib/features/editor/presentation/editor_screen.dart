@@ -188,9 +188,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                       PopupMenuButton<String>(
                         tooltip: 'Cambiar carpeta',
                         onSelected: (folderId) => _selectFolder(
-                          folders.firstWhere(
-                            (folder) => folder.id == folderId,
-                          ),
+                          folders.firstWhere((folder) => folder.id == folderId),
                         ),
                         itemBuilder: (context) => folders
                             .map(
@@ -249,15 +247,15 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     });
 
     try {
-      final note = await ref.read(notesRepositoryProvider).fetchNoteById(
-        _noteId!,
-      );
+      final note = await ref
+          .read(notesRepositoryProvider)
+          .fetchNoteById(_noteId!);
 
       if (note == null) {
-      setState(() {
-        _message = 'No encontramos esta nota.';
-        _messageIsError = true;
-      });
+        setState(() {
+          _message = 'No encontramos esta nota.';
+          _messageIsError = true;
+        });
         return;
       }
 
@@ -374,9 +372,9 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
 
       if (mounted) {
         setState(() => _didChangeImages = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Nota guardada.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Nota guardada.')));
         context.go('/home');
       }
     } catch (error) {
@@ -577,10 +575,8 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   List<ChecklistItem> _checklistItemsForSave() {
     return _checklistItems
         .map(
-          (item) => ChecklistItem(
-            label: item.controller.text,
-            isDone: item.isDone,
-          ),
+          (item) =>
+              ChecklistItem(label: item.controller.text, isDone: item.isDone),
         )
         .where((item) => item.label.trim().isNotEmpty)
         .toList();
@@ -895,11 +891,24 @@ class _MetaPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final foregroundColor = isDark
+        ? Colors.white.withValues(alpha: 0.86)
+        : AppColors.inkMuted;
+
     return Chip(
-      avatar: Icon(icon, size: 14),
+      avatar: Icon(icon, size: 14, color: foregroundColor),
       label: Text(label),
-      backgroundColor: AppColors.paperMuted,
-      side: BorderSide.none,
+      labelStyle: TextStyle(
+        color: foregroundColor,
+        fontWeight: FontWeight.w700,
+      ),
+      backgroundColor: isDark ? AppColors.nightMuted : AppColors.paperMuted,
+      side: BorderSide(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.12)
+            : Colors.transparent,
+      ),
       visualDensity: VisualDensity.compact,
     );
   }
@@ -933,10 +942,7 @@ class _ChecklistEditor extends StatelessWidget {
     return Column(
       children: [
         for (final entry in items.asMap().entries)
-          _ChecklistEditorRow(
-            item: entry.value,
-            onChanged: onChanged,
-          ),
+          _ChecklistEditorRow(item: entry.value, onChanged: onChanged),
         Align(
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
@@ -958,6 +964,11 @@ class _ChecklistEditorRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final doneColor = isDark
+        ? Colors.white.withValues(alpha: 0.48)
+        : AppColors.inkMuted;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
@@ -985,7 +996,7 @@ class _ChecklistEditorRow extends StatelessWidget {
               ),
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 decoration: item.isDone ? TextDecoration.lineThrough : null,
-                color: item.isDone ? AppColors.inkMuted : null,
+                color: item.isDone ? doneColor : null,
               ),
             ),
           ),
