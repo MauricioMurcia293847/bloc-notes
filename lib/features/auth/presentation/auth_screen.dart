@@ -61,14 +61,14 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: _AuthModeButton(
                       isActive: !_isSignUp,
                       label: 'Iniciar sesion',
-                      onPressed: () => setState(() => _isSignUp = false),
+                      onPressed: () => _setAuthMode(false),
                     ),
                   ),
                   Expanded(
                     child: _AuthModeButton(
                       isActive: _isSignUp,
                       label: 'Crear cuenta',
-                      onPressed: () => setState(() => _isSignUp = true),
+                      onPressed: () => _setAuthMode(true),
                     ),
                   ),
                 ],
@@ -83,6 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
+              onChanged: (_) => _clearMessage(),
             ),
             const SizedBox(height: 18),
             Text('CONTRASENA', style: textTheme.labelSmall),
@@ -92,6 +93,7 @@ class _AuthScreenState extends State<AuthScreen> {
               obscureText: _obscurePassword,
               textInputAction: TextInputAction.done,
               autofillHints: const [AutofillHints.password],
+              onChanged: (_) => _clearMessage(),
               onSubmitted: (_) => _submit(),
               decoration: InputDecoration(
                 hintText: '********',
@@ -234,7 +236,7 @@ class _AuthScreenState extends State<AuthScreen> {
           emailRedirectTo: 'blocnotes://auth-callback',
         );
         _setMessage(
-          'Mensaje de Supabase: enviamos un correo de verificacion. Abre el enlace desde este dispositivo para activar tu cuenta.',
+          'Mensaje de Supabase: si este correo no estaba registrado, enviamos un enlace de verificacion. Si ya verificaste tu cuenta, inicia sesion con tu contrasena.',
         );
         setState(() => _isSignUp = false);
       } else {
@@ -305,6 +307,25 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _message = message;
       _messageIsError = isError;
+    });
+  }
+
+  void _clearMessage() {
+    if (_message == null) {
+      return;
+    }
+
+    setState(() {
+      _message = null;
+      _messageIsError = false;
+    });
+  }
+
+  void _setAuthMode(bool isSignUp) {
+    setState(() {
+      _isSignUp = isSignUp;
+      _message = null;
+      _messageIsError = false;
     });
   }
 
