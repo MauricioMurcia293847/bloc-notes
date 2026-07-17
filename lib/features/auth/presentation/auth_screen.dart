@@ -21,9 +21,12 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _isSignUp = false;
   bool _isLoading = false;
   bool _isSendingReset = false;
+  bool _isResendingVerification = false;
   bool _obscurePassword = true;
   String? _message;
   bool _messageIsError = false;
+  bool _showRecoveryAction = false;
+  bool _showVerificationAction = false;
 
   @override
   void dispose() {
@@ -130,6 +133,36 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: textTheme.bodyMedium?.copyWith(color: _messageColor()),
               ),
               const SizedBox(height: 12),
+              if (_showRecoveryAction || _showVerificationAction) ...[
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    if (_showRecoveryAction)
+                      OutlinedButton(
+                        onPressed: _isSendingReset ? null : _sendPasswordReset,
+                        child: Text(
+                          _isSendingReset
+                              ? 'Enviando...'
+                              : 'Recuperar contrasena',
+                        ),
+                      ),
+                    if (_showVerificationAction)
+                      OutlinedButton(
+                        onPressed: _isResendingVerification
+                            ? null
+                            : _resendVerificationEmail,
+                        child: Text(
+                          _isResendingVerification
+                              ? 'Enviando...'
+                              : 'Reenviar verificacion',
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+              ],
             ],
             FilledButton(
               onPressed: _isLoading ? null : _submit,
@@ -237,6 +270,7 @@ class _AuthScreenState extends State<AuthScreen> {
         );
         _setMessage(
           'Mensaje de Supabase: si este correo no estaba registrado, enviamos un enlace de verificacion. Si ya verificaste tu cuenta, inicia sesion con tu contrasena.',
+          showVerificationAction: true,
         );
         setState(() => _isSignUp = false);
       } else {
@@ -246,7 +280,7 @@ class _AuthScreenState extends State<AuthScreen> {
         }
       }
     } on AuthException catch (error) {
-      _setMessage(friendlyAuthError(error), isError: true);
+      _setAuthError(error);
     } catch (error) {
       _setMessage(friendlyAuthError(error), isError: true);
     } finally {
@@ -287,7 +321,9 @@ class _AuthScreenState extends State<AuthScreen> {
         email,
         redirectTo: 'blocnotes://reset-password',
       );
-      _setMessage('Te enviamos instrucciones al correo.');
+      _setMessage(
+        'Mensaje de Supabase: enviamos instrucciones para restablecer tu contrasena.',
+      );
     } on AuthException catch (error) {
       _setMessage(friendlyAuthError(error), isError: true);
     } catch (error) {
@@ -299,7 +335,12 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  void _setMessage(String message, {bool isError = false}) {
+  void _setMessage(
+    String message, {
+    bool isError = false,
+    bool showRecoveryAction = false,
+    bool showVerificationAction = false,
+  }) {
     if (!mounted) {
       return;
     }
@@ -307,7 +348,66 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _message = message;
       _messageIsError = isError;
+      _showRecoveryAction = showRecoveryAction;
+      _showVerificationAction = showVerificationAction;
     });
+  }
+
+  void _setAuthError(Object error) {
+    final message = error.toString().toLowerCase();
+    _setMessage(
+      friendlyAuthError(error),
+      isError: true,
+      showRecoveryAction: message.contains('invalid login credentials'),
+    );
+  }
+
+  Future<void> _resendVerificationEmail() async {
+    if (!AppConfig.hasSupabaseConfig) {
+      _setMessage(
+        'Configura Supabase para reenviar verificacion.',
+        isError: true,
+      );
+      return;
+    }
+
+    final email = _emailController.text.trim();
+    if (email.isEmpty) {
+      _setMessage('Escribe tu correo primero.', isError: true);
+      return;
+    }
+
+    if (!_isValidEmail(email)) {
+      _setMessage('Escribe un correo valido.', isError: true);
+      return;
+    }
+
+    setState(() {
+      _isResendingVerification = true;
+      _message = null;
+      _messageIsError = false;
+      _showRecoveryAction = false;
+      _showVerificationAction = false;
+    });
+
+    try {
+      await Supabase.instance.client.auth.resend(
+        email: email,
+        type: OtpType.signup,
+        emailRedirectTo: 'blocnotes://auth-callback',
+      );
+      _setMessage(
+        'Mensaje de Supabase: reenviamos el correo de verificacion. Abre el enlace desde este dispositivo.',
+      );
+    } on AuthException catch (error) {
+      _setAuthError(error);
+    } catch (error) {
+      _setMessage(friendlyAuthError(error), isError: true);
+    } finally {
+      if (mounted) {
+        setState(() => _isResendingVerification = false);
+      }
+    }
   }
 
   void _clearMessage() {
@@ -318,6 +418,8 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _message = null;
       _messageIsError = false;
+      _showRecoveryAction = false;
+      _showVerificationAction = false;
     });
   }
 
@@ -326,6 +428,8 @@ class _AuthScreenState extends State<AuthScreen> {
       _isSignUp = isSignUp;
       _message = null;
       _messageIsError = false;
+      _showRecoveryAction = false;
+      _showVerificationAction = false;
     });
   }
 
