@@ -26,14 +26,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final sortOrder = ref.watch(notesSortProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileState = ref.watch(profileProvider);
-    final foldersCount = ref.watch(foldersProvider).maybeWhen(
+    final foldersCount = ref
+        .watch(foldersProvider)
+        .maybeWhen(
           data: (folders) => folders.length.toString(),
           orElse: () => '-',
         );
-    final deletedCount = ref.watch(deletedNotesProvider).maybeWhen(
-          data: (notes) => notes.length.toString(),
-          orElse: () => '-',
-        );
+    final deletedCount = ref
+        .watch(deletedNotesProvider)
+        .maybeWhen(data: (notes) => notes.length.toString(), orElse: () => '-');
 
     return Scaffold(
       appBar: AppBar(
@@ -57,11 +58,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onTap: profile == null ? null : () => _showEditProfile(profile),
               ),
               loading: () => _ProfileTile.loading(isDark: isDark),
-              error: (_, _) => _ProfileTile(
-                isDark: isDark,
-                profile: null,
-                onTap: null,
-              ),
+              error: (_, _) =>
+                  _ProfileTile(isDark: isDark, profile: null, onTap: null),
             ),
             const SizedBox(height: 24),
             const _SectionLabel(label: 'APARIENCIA'),
@@ -282,10 +280,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         icon: CircleAvatar(
           backgroundColor: AppColors.danger.withValues(alpha: 0.16),
-          child: const Icon(
-            Icons.logout_rounded,
-            color: AppColors.danger,
-          ),
+          child: const Icon(Icons.logout_rounded, color: AppColors.danger),
         ),
         title: const Text('Cerrar sesion?'),
         content: const Text(
@@ -384,10 +379,7 @@ class _OptionSheet<T> extends StatelessWidget {
 }
 
 class _EditProfileSheet extends StatefulWidget {
-  const _EditProfileSheet({
-    required this.profile,
-    required this.onSave,
-  });
+  const _EditProfileSheet({required this.profile, required this.onSave});
 
   final UserProfile profile;
   final Future<void> Function(String fullName) onSave;
@@ -438,7 +430,7 @@ class _EditProfileSheetState extends State<_EditProfileSheet> {
             ),
             const SizedBox(height: 12),
             Text(
-              widget.profile.email ?? 'Sin correo activo',
+              widget.profile.email ?? 'Correo verificado por Supabase',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             if (_message != null) ...[
@@ -496,9 +488,9 @@ class _ProfileTile extends StatelessWidget {
   }) : _isLoading = false;
 
   const _ProfileTile.loading({required this.isDark})
-      : profile = null,
-        onTap = null,
-        _isLoading = true;
+    : profile = null,
+      onTap = null,
+      _isLoading = true;
 
   final bool isDark;
   final UserProfile? profile;
@@ -540,14 +532,14 @@ class _ProfileTile extends StatelessWidget {
                   Text(
                     _isLoading
                         ? 'Cargando perfil'
-                        : currentProfile?.displayName ?? 'Cuenta activa',
+                        : currentProfile?.displayName ?? 'Cuenta verificada',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    currentProfile?.email ?? 'Sin correo activo',
+                    currentProfile?.email ?? 'Correo verificado por Supabase',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyMedium,

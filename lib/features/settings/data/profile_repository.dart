@@ -35,7 +35,7 @@ class UserProfile {
       return trimmedEmail.split('@').first;
     }
 
-    return 'Cuenta activa';
+    return 'Cuenta verificada';
   }
 
   String get initials {
@@ -73,6 +73,7 @@ class ProfileRepository {
       return null;
     }
 
+    final email = _emailFromUser(user);
     final row = await client
         .from('profiles')
         .select('id, full_name, avatar_url')
@@ -80,12 +81,12 @@ class ProfileRepository {
         .maybeSingle();
 
     if (row == null) {
-      return UserProfile(id: user.id, email: user.email, fullName: '');
+      return UserProfile(id: user.id, email: email, fullName: '');
     }
 
     return UserProfile(
       id: user.id,
-      email: user.email,
+      email: email,
       fullName: row['full_name'] as String? ?? '',
       avatarUrl: row['avatar_url'] as String?,
     );
@@ -106,5 +107,26 @@ class ProfileRepository {
       'id': user.id,
       'full_name': fullName.trim(),
     });
+  }
+
+  String? _emailFromUser(User user) {
+    final directEmail = user.email?.trim();
+    if (directEmail != null && directEmail.isNotEmpty) {
+      return directEmail;
+    }
+
+    final metadataEmail = user.userMetadata?['email']?.toString().trim();
+    if (metadataEmail != null && metadataEmail.isNotEmpty) {
+      return metadataEmail;
+    }
+
+    for (final identity in user.identities ?? const <UserIdentity>[]) {
+      final identityEmail = identity.identityData?['email']?.toString().trim();
+      if (identityEmail != null && identityEmail.isNotEmpty) {
+        return identityEmail;
+      }
+    }
+
+    return null;
   }
 }

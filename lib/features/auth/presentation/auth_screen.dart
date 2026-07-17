@@ -234,7 +234,7 @@ class _AuthScreenState extends State<AuthScreen> {
           emailRedirectTo: 'blocnotes://auth-callback',
         );
         _setMessage(
-          'Cuenta creada. Abre el correo de verificacion desde este celular.',
+          'Mensaje de Supabase: enviamos un correo de verificacion. Abre el enlace desde este dispositivo para activar tu cuenta.',
         );
         setState(() => _isSignUp = false);
       } else {
