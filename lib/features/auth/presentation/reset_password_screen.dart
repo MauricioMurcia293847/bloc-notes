@@ -155,9 +155,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
         UserAttributes(password: password),
       );
       ref.read(authStateControllerProvider).clearPasswordRecovery();
+      await Supabase.instance.client.auth.signOut();
 
       if (mounted) {
-        context.go('/home');
+        context.go('/auth?notice=password-updated');
       }
     } on AuthException catch (error) {
       setState(() {

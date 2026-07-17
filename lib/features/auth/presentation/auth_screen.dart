@@ -8,7 +8,9 @@ import '../../../shared/widgets/bloc_app_mark.dart';
 import 'auth_error_message.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, this.notice});
+
+  final String? notice;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -27,6 +29,15 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _messageIsError = false;
   bool _showRecoveryAction = false;
   bool _showVerificationAction = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.notice == 'password-updated') {
+      _message =
+          'Contrasena actualizada. Inicia sesion con tu nueva contrasena.';
+    }
+  }
 
   @override
   void dispose() {

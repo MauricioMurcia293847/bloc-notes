@@ -13,7 +13,7 @@ String friendlyAuthError(Object error) {
   }
 
   if (lower.contains('invalid login credentials')) {
-    return 'No pudimos iniciar sesion con esos datos. Revisa el correo y la contrasena. Si no la recuerdas, usa recuperar contrasena.';
+    return 'No pudimos iniciar sesion con esos datos. Revisa el correo y escribe exactamente tu contrasena actual. Si la cambiaste hace poco, usa la nueva.';
   }
 
   if (lower.contains('over_email_send_rate_limit') ||

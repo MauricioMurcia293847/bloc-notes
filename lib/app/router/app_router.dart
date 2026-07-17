@@ -53,7 +53,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/auth',
         name: 'auth',
-        builder: (context, state) => const AuthScreen(),
+        builder: (context, state) =>
+            AuthScreen(notice: state.uri.queryParameters['notice']),
       ),
       GoRoute(
         path: '/reset-password',
@@ -73,9 +74,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/editor',
         name: 'editor',
-        builder: (context, state) => EditorScreen(
-          noteId: state.uri.queryParameters['id'],
-        ),
+        builder: (context, state) =>
+            EditorScreen(noteId: state.uri.queryParameters['id']),
       ),
       GoRoute(
         path: '/settings',
