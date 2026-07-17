@@ -74,6 +74,22 @@ Para pruebas iniciales:
 3. Decide si se requiere confirmar email para desarrollo.
 4. Crea un usuario de prueba o registra uno desde la app cuando conectemos la UI.
 
+### Google provider
+
+Para Login con Google:
+
+1. Ve a Authentication > Providers.
+2. Habilita Google.
+3. En Google Cloud Console crea/configura el OAuth Client.
+4. En Google Cloud agrega como Authorized redirect URI:
+
+```text
+https://eguntjilflnbzmulzpam.supabase.co/auth/v1/callback
+```
+
+5. Copia el Client ID y Client Secret de Google en Supabase.
+6. Guarda cambios.
+
 ## 7. Deep links de Auth
 
 En Authentication > URL Configuration agrega:
@@ -83,7 +99,8 @@ blocnotes://auth-callback
 blocnotes://reset-password
 ```
 
-`blocnotes://auth-callback` se usa para confirmar el correo al crear cuenta.
+`blocnotes://auth-callback` se usa para confirmar el correo al crear cuenta y
+para volver a la app despues de Login con Google.
 `blocnotes://reset-password` se usa para recuperacion de contrasena.
 
 Los correos deben abrirse desde el emulador/dispositivo para que Android enrute

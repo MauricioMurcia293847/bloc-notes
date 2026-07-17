@@ -22,6 +22,12 @@ String friendlyAuthError(Object error) {
     return 'Supabase limito temporalmente el envio de correos del proyecto por varios intentos. Espera unos minutos antes de solicitar otro correo.';
   }
 
+  if (lower.contains('provider') ||
+      lower.contains('oauth') ||
+      lower.contains('google')) {
+    return 'No pudimos abrir Google. Revisa que el proveedor Google este habilitado en Supabase y que la URL de redireccion este configurada.';
+  }
+
   if (lower.contains('user already registered') ||
       lower.contains('already registered')) {
     return 'Ese correo ya tiene una cuenta. Inicia sesion o recupera tu contrasena.';

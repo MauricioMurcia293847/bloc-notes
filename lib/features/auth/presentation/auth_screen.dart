@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,6 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   bool _isSignUp = false;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
   bool _isSendingReset = false;
   bool _isResendingVerification = false;
   bool _obscurePassword = true;
@@ -201,9 +203,7 @@ class _AuthScreenState extends State<AuthScreen> {
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => _setMessage(
-                      'Google se conectara en una fase posterior.',
-                    ),
+                    onPressed: _isGoogleLoading ? null : _signInWithGoogle,
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
                       shape: RoundedRectangleBorder(
@@ -211,7 +211,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                     icon: const Icon(Icons.g_mobiledata_rounded),
-                    label: const Text('Google'),
+                    label: Text(_isGoogleLoading ? 'Abriendo...' : 'Google'),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -345,6 +345,39 @@ class _AuthScreenState extends State<AuthScreen> {
     } finally {
       if (mounted) {
         setState(() => _isSendingReset = false);
+      }
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    if (!AppConfig.hasSupabaseConfig) {
+      context.go('/home');
+      return;
+    }
+
+    setState(() {
+      _isGoogleLoading = true;
+      _message = null;
+      _messageIsError = false;
+      _showRecoveryAction = false;
+      _showVerificationAction = false;
+    });
+
+    try {
+      await Supabase.instance.client.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: kIsWeb ? null : 'blocnotes://auth-callback',
+        authScreenLaunchMode: kIsWeb
+            ? LaunchMode.platformDefault
+            : LaunchMode.externalApplication,
+      );
+    } on AuthException catch (error) {
+      _setMessage(friendlyAuthError(error), isError: true);
+    } catch (error) {
+      _setMessage(friendlyAuthError(error), isError: true);
+    } finally {
+      if (mounted) {
+        setState(() => _isGoogleLoading = false);
       }
     }
   }

@@ -26,6 +26,7 @@ Fase actual:
 
 - Onboarding inicial.
 - Registro e inicio de sesion con correo/password.
+- Inicio de sesion con Google via Supabase OAuth.
 - Recuperacion de contrasena con deep link `blocnotes://reset-password`.
 - Sesion persistente con Supabase Auth.
 - Home de notas en vista grid/lista.
@@ -162,10 +163,18 @@ Crea un proyecto Supabase y aplica los scripts:
 Configura Auth en Supabase:
 
 - Habilita Email provider.
+- Habilita Google provider si usaras Login con Google.
 - En Authentication > URL Configuration agrega:
 
 ```text
+blocnotes://auth-callback
 blocnotes://reset-password
+```
+
+Para Google Cloud, agrega como Authorized redirect URI:
+
+```text
+https://your-project-ref.supabase.co/auth/v1/callback
 ```
 
 ## Variables
@@ -271,6 +280,7 @@ Flujos validados manualmente:
 - Editar perfil.
 - Modo oscuro.
 - Agregar imagen y ver miniatura.
+- Login con Google cuando el provider esta configurado en Supabase/Google Cloud.
 
 ## Roadmap
 
@@ -286,7 +296,7 @@ Pendientes funcionales futuros:
 
 - Recordatorios reales con notificaciones.
 - Gestion avanzada de carpetas desde la app.
-- Login social con Google/Apple.
+- Login social con Apple.
 - Limpieza de imagenes huerfanas al borrar definitivamente una nota.
 
 ## Licencia
