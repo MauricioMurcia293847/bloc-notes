@@ -74,6 +74,8 @@ class ProfileRepository {
     }
 
     final email = _emailFromUser(user);
+    final metadataName = _metadataText(user, const ['full_name', 'name']);
+    final metadataAvatar = _metadataText(user, const ['avatar_url', 'picture']);
     final row = await client
         .from('profiles')
         .select('id, full_name, avatar_url')
@@ -81,14 +83,19 @@ class ProfileRepository {
         .maybeSingle();
 
     if (row == null) {
-      return UserProfile(id: user.id, email: email, fullName: '');
+      return UserProfile(
+        id: user.id,
+        email: email,
+        fullName: metadataName ?? '',
+        avatarUrl: metadataAvatar,
+      );
     }
 
     return UserProfile(
       id: user.id,
       email: email,
-      fullName: row['full_name'] as String? ?? '',
-      avatarUrl: row['avatar_url'] as String?,
+      fullName: _firstNonEmpty(row['full_name'] as String?, metadataName) ?? '',
+      avatarUrl: _firstNonEmpty(row['avatar_url'] as String?, metadataAvatar),
     );
   }
 
@@ -115,7 +122,7 @@ class ProfileRepository {
       return directEmail;
     }
 
-    final metadataEmail = user.userMetadata?['email']?.toString().trim();
+    final metadataEmail = _metadataText(user, const ['email']);
     if (metadataEmail != null && metadataEmail.isNotEmpty) {
       return metadataEmail;
     }
@@ -125,6 +132,36 @@ class ProfileRepository {
       if (identityEmail != null && identityEmail.isNotEmpty) {
         return identityEmail;
       }
+    }
+
+    return null;
+  }
+
+  String? _metadataText(User user, List<String> keys) {
+    final metadata = user.userMetadata;
+    if (metadata == null) {
+      return null;
+    }
+
+    for (final key in keys) {
+      final value = metadata[key]?.toString().trim();
+      if (value != null && value.isNotEmpty) {
+        return value;
+      }
+    }
+
+    return null;
+  }
+
+  String? _firstNonEmpty(String? first, String? second) {
+    final trimmedFirst = first?.trim();
+    if (trimmedFirst != null && trimmedFirst.isNotEmpty) {
+      return trimmedFirst;
+    }
+
+    final trimmedSecond = second?.trim();
+    if (trimmedSecond != null && trimmedSecond.isNotEmpty) {
+      return trimmedSecond;
     }
 
     return null;

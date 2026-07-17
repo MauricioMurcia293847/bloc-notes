@@ -13,7 +13,7 @@ Estado actual:
 
 - `flutter analyze`: sin issues.
 - `flutter test`: pruebas actuales pasando.
-- `v1.0.9+10`: habilita Login con Google via Supabase OAuth.
+- `v1.0.10+11`: muestra nombre/correo/avatar de usuarios Google desde OAuth metadata.
 - APK release instalado y abierto correctamente en emulador Pixel 7.
 
 ## Firma local
@@ -50,7 +50,7 @@ build/app/outputs/flutter-apk/app-release.apk
 Build actual generado:
 
 ```text
-release/bloc-notes-v1.0.9.apk
+release/bloc-notes-v1.0.10.apk
 ```
 
 ## Build para Play Store
@@ -70,7 +70,7 @@ build/app/outputs/bundle/release/app-release.aab
 Build actual generado:
 
 ```text
-release/bloc-notes-v1.0.9.aab
+release/bloc-notes-v1.0.10.aab
 ```
 
 ## Nota sobre OneDrive
