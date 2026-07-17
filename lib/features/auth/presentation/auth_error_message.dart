@@ -16,6 +16,12 @@ String friendlyAuthError(Object error) {
     return 'No pudimos iniciar sesion. Revisa tu correo y contrasena. Si tu cuenta ya fue verificada y no recuerdas la contrasena, usa recuperar contrasena.';
   }
 
+  if (lower.contains('over_email_send_rate_limit') ||
+      lower.contains('email rate limit exceeded') ||
+      lower.contains('rate limit')) {
+    return 'Supabase limito temporalmente el envio de correos por varios intentos. Espera unos minutos y vuelve a solicitar la recuperacion.';
+  }
+
   if (lower.contains('user already registered') ||
       lower.contains('already registered')) {
     return 'Ese correo ya tiene una cuenta. Inicia sesion o recupera tu contrasena.';

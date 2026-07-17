@@ -13,7 +13,7 @@ Estado actual:
 
 - `flutter analyze`: sin issues.
 - `flutter test`: pruebas actuales pasando.
-- `v1.0.5+6`: acciones para recuperar contrasena y reenviar verificacion desde Auth.
+- `v1.0.6+7`: mensaje claro cuando Supabase limita envio de correos.
 - APK release instalado y abierto correctamente en emulador Pixel 7.
 
 ## Firma local
@@ -50,7 +50,7 @@ build/app/outputs/flutter-apk/app-release.apk
 Build actual generado:
 
 ```text
-release/bloc-notes-v1.0.5.apk
+release/bloc-notes-v1.0.6.apk
 ```
 
 ## Build para Play Store
@@ -70,7 +70,7 @@ build/app/outputs/bundle/release/app-release.aab
 Build actual generado:
 
 ```text
-release/bloc-notes-v1.0.5.aab
+release/bloc-notes-v1.0.6.aab
 ```
 
 ## Nota sobre OneDrive
