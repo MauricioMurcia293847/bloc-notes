@@ -13,13 +13,13 @@ String friendlyAuthError(Object error) {
   }
 
   if (lower.contains('invalid login credentials')) {
-    return 'No pudimos iniciar sesion. Revisa tu correo y contrasena. Si tu cuenta ya fue verificada y no recuerdas la contrasena, usa recuperar contrasena.';
+    return 'No pudimos iniciar sesion con esos datos. Revisa el correo y la contrasena. Si no la recuerdas, usa recuperar contrasena.';
   }
 
   if (lower.contains('over_email_send_rate_limit') ||
       lower.contains('email rate limit exceeded') ||
       lower.contains('rate limit')) {
-    return 'Supabase limito temporalmente el envio de correos por varios intentos. Espera unos minutos y vuelve a solicitar la recuperacion.';
+    return 'Supabase limito temporalmente el envio de correos del proyecto por varios intentos. Espera unos minutos antes de solicitar otro correo.';
   }
 
   if (lower.contains('user already registered') ||

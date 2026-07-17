@@ -237,6 +237,8 @@ class _AuthScreenState extends State<AuthScreen> {
       _isLoading = true;
       _message = null;
       _messageIsError = false;
+      _showRecoveryAction = false;
+      _showVerificationAction = false;
     });
 
     try {
@@ -269,8 +271,7 @@ class _AuthScreenState extends State<AuthScreen> {
           emailRedirectTo: 'blocnotes://auth-callback',
         );
         _setMessage(
-          'Mensaje de Supabase: si este correo no estaba registrado, enviamos un enlace de verificacion. Si ya verificaste tu cuenta, inicia sesion con tu contrasena.',
-          showVerificationAction: true,
+          'Mensaje de Supabase: si el correo puede registrarse, enviamos un enlace de verificacion. Abre ese enlace desde este dispositivo y luego inicia sesion.',
         );
         setState(() => _isSignUp = false);
       } else {
@@ -314,6 +315,8 @@ class _AuthScreenState extends State<AuthScreen> {
       _isSendingReset = true;
       _message = null;
       _messageIsError = false;
+      _showRecoveryAction = false;
+      _showVerificationAction = false;
     });
 
     try {
@@ -355,10 +358,18 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _setAuthError(Object error) {
     final message = error.toString().toLowerCase();
+    final isRateLimited = _isEmailRateLimitError(message);
+    final isInvalidCredentials = message.contains('invalid login credentials');
+    final isUnconfirmed =
+        message.contains('email not confirmed') ||
+        message.contains('email_not_confirmed') ||
+        message.contains('confirm your email');
+
     _setMessage(
       friendlyAuthError(error),
       isError: true,
-      showRecoveryAction: message.contains('invalid login credentials'),
+      showRecoveryAction: isInvalidCredentials && !isRateLimited,
+      showVerificationAction: isUnconfirmed && !isRateLimited,
     );
   }
 
@@ -439,6 +450,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
   bool _isValidEmail(String email) {
     return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
+  }
+
+  bool _isEmailRateLimitError(String message) {
+    return message.contains('over_email_send_rate_limit') ||
+        message.contains('email rate limit exceeded') ||
+        message.contains('rate limit');
   }
 }
 
