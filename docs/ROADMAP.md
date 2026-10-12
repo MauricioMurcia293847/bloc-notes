@@ -69,7 +69,7 @@
 - [x] Pruebas manuales.
 - [x] Imagenes en notas.
 - [x] Miniaturas en Home/Busqueda.
-- [ ] Build Android.
+- [x] Build Android.
 - [x] README final con capturas.
 
 ## Fase 6 - Documentacion y GitHub
@@ -89,3 +89,10 @@
 - [x] Build APK.
 - [x] Build AAB.
 - [x] Revision final en emulador/dispositivo.
+
+## Ideas futuras (sin fase)
+
+- Recordatorios reales con notificaciones.
+- Gestion avanzada de carpetas desde la app.
+- Login social con Apple.
+- Limpieza de imagenes huerfanas al borrar definitivamente una nota.

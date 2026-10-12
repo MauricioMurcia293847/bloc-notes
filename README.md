@@ -9,18 +9,20 @@ El proyecto parte de los mockups incluidos en `Bloc.pdf` y del flujo mostrado en
 
 ## Estado
 
-Fases completadas funcionalmente:
+Fases completadas (detalle en [`docs/ROADMAP.md`](docs/ROADMAP.md)):
 
 - Fase 1: Preparacion del entorno y proyecto Flutter.
 - Fase 2: Front-end base.
 - Fase 3: Base de datos en Supabase.
 - Fase 4: Auth, sesion y sincronizacion CRUD.
-- Fase 5: Pulido UX.
-- Fase 5.1: Imagenes en notas con Supabase Storage.
+- Fase 5: Calidad y entrega: estados de UI, validaciones, imagenes en notas con
+  Supabase Storage y build Android.
+- Fase 6: Documentacion y GitHub.
 
 Fase actual:
 
-- Fase 7: Testing y build Android.
+- Fase 7: Testing y build. APK, AAB y revision final listos; faltan pruebas
+  unitarias y pruebas adicionales de UI.
 
 ## Caracteristicas
 
@@ -119,9 +121,12 @@ supabase/
   repair_*.sql         Scripts idempotentes de reparacion
   verify_*.sql         Scripts de verificacion
 docs/
+  ARCHITECTURE.md      Capas, features y flujo de la app
   DATABASE.md          Modelo de datos y Storage
-  SUPABASE_SETUP.md    Guia de Supabase
+  RELEASE.md           Firma y builds Android
   ROADMAP.md           Fases y pendientes
+  SUPABASE_SETUP.md    Guia de Supabase
+  screenshots/         Capturas de pantalla
 ```
 
 ## Requisitos
@@ -132,10 +137,10 @@ docs/
 - Emulador Android o dispositivo fisico
 - Proyecto Supabase
 
-En esta maquina Flutter esta instalado en:
+Verifica que Flutter y el Android SDK esten bien instalados con:
 
-```text
-C:\Users\mauri\development\flutter
+```powershell
+flutter doctor -v
 ```
 
 ## Configuracion
@@ -284,15 +289,12 @@ Flujos validados manualmente:
 
 ## Roadmap
 
-Siguiente fase:
+Pendiente en la Fase 7 (detalle en [`docs/ROADMAP.md`](docs/ROADMAP.md)):
 
-- Fase 7: pruebas adicionales, build Android APK/AAB y revision final.
+- Pruebas unitarias de modelos/repositorios.
+- Pruebas adicionales de UI.
 
-Despues:
-
-- Fase 7: pruebas adicionales y build Android APK/AAB.
-
-Pendientes funcionales futuros:
+Ideas futuras, sin fase asignada:
 
 - Recordatorios reales con notificaciones.
 - Gestion avanzada de carpetas desde la app.
