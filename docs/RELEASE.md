@@ -47,11 +47,10 @@ Salida esperada:
 build/app/outputs/flutter-apk/app-release.apk
 ```
 
-Build actual generado:
-
-```text
-release/bloc-notes-v1.0.10.apk
-```
+El APK no se versiona en el repositorio. Cada version se publica como asset en
+GitHub Releases con el nombre `bloc-notes-vX.Y.Z.apk`; la mas reciente es
+`v1.0.10`. Si guardas copias locales en `release/`, esa carpeta esta ignorada
+por Git.
 
 ## Build para Play Store
 
@@ -67,11 +66,8 @@ Salida esperada:
 build/app/outputs/bundle/release/app-release.aab
 ```
 
-Build actual generado:
-
-```text
-release/bloc-notes-v1.0.10.aab
-```
+El AAB tampoco se versiona en el repositorio. Se publica en el mismo release de
+GitHub, junto al APK, con el nombre `bloc-notes-vX.Y.Z.aab`.
 
 ## Nota sobre OneDrive
 

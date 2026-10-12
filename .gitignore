@@ -3,7 +3,14 @@
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
+.pub-cache/
+.pub/
 build/
+coverage/
+
+# Symbolication / obfuscation
+app.*.symbols
+app.*.map.json
 
 # IDEs
 .idea/
@@ -27,8 +34,11 @@ Thumbs.db
 # Local generated files
 tmp/
 *.log
-release/*.apk
-release/*.aab
+
+# Release binaries (published on GitHub Releases, not versioned)
+release/
+*.apk
+*.aab
 
 # Android / iOS generated artifacts
 android/.gradle/
@@ -37,3 +47,4 @@ ios/Pods/
 ios/.symlinks/
 ios/Flutter/Flutter.framework
 ios/Flutter/Flutter.podspec
+ios/Flutter/.last_build_id
