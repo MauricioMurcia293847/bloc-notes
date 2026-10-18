@@ -1,17 +1,16 @@
+import 'package:bloc_notes/core/config/app_config.dart';
+import 'package:bloc_notes/features/auth/data/auth_state_controller.dart';
+import 'package:bloc_notes/features/auth/presentation/auth_screen.dart';
+import 'package:bloc_notes/features/auth/presentation/reset_password_screen.dart';
+import 'package:bloc_notes/features/editor/presentation/editor_screen.dart';
+import 'package:bloc_notes/features/home/presentation/home_screen.dart';
+import 'package:bloc_notes/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:bloc_notes/features/search/presentation/search_screen.dart';
+import 'package:bloc_notes/features/settings/presentation/settings_screen.dart';
+import 'package:bloc_notes/features/trash/presentation/trash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../core/config/app_config.dart';
-import '../../features/auth/data/auth_state_controller.dart';
-import '../../features/auth/presentation/auth_screen.dart';
-import '../../features/auth/presentation/reset_password_screen.dart';
-import '../../features/editor/presentation/editor_screen.dart';
-import '../../features/home/presentation/home_screen.dart';
-import '../../features/onboarding/presentation/onboarding_screen.dart';
-import '../../features/search/presentation/search_screen.dart';
-import '../../features/settings/presentation/settings_screen.dart';
-import '../../features/trash/presentation/trash_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateControllerProvider);

@@ -1,6 +1,44 @@
 # Reglas del analizador estático de Dart.
 #
 # `flutter analyze` (y CI) usan este archivo para detectar errores y malas
-# prácticas antes de ejecutar la app. Por ahora usamos las reglas recomendadas
-# de Flutter; en un PR aparte activaremos reglas más estrictas.
+# prácticas antes de ejecutar la app. Partimos de las reglas recomendadas de
+# Flutter y sumamos algunas más estrictas, cada una con su motivo.
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    # No permite convertir `dynamic` a otro tipo sin un cast explícito.
+    # Evita errores en tiempo de ejecución al leer JSON de Supabase.
+    strict-casts: true
+    # Avisa cuando Dart no puede inferir un tipo y usaría `dynamic` en silencio.
+    strict-inference: true
+    # Obliga a indicar el tipo de las colecciones genéricas (`List<Note>`, no `List`).
+    strict-raw-types: true
+  errors:
+    # Un Future sin await puede hacer que un error pase desapercibido.
+    unawaited_futures: error
+
+linter:
+  rules:
+    # Errores comunes
+    - unawaited_futures
+    - discarded_futures
+    - avoid_dynamic_calls
+    - cancel_subscriptions
+    - close_sinks
+    - use_build_context_synchronously
+    - only_throw_errors
+    - throw_in_finally
+    - no_adjacent_strings_in_list
+
+    # Estilo y legibilidad
+    - always_declare_return_types
+    - prefer_final_locals
+    - prefer_final_in_for_each
+    - prefer_single_quotes
+    - directives_ordering
+    - always_use_package_imports
+    - sort_constructors_first
+    - unnecessary_lambdas
+    - unnecessary_parenthesis
+    - use_super_parameters

@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
+import 'package:bloc_notes/core/config/app_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../core/config/app_config.dart';
 
 final authStateControllerProvider = Provider<AuthStateController>((ref) {
   final controller = AuthStateController();
@@ -79,8 +78,8 @@ class AuthStateController extends ChangeNotifier {
 
   @override
   void dispose() {
-    _subscription?.cancel();
-    _linkSubscription?.cancel();
+    unawaited(_subscription?.cancel());
+    unawaited(_linkSubscription?.cancel());
     super.dispose();
   }
 }

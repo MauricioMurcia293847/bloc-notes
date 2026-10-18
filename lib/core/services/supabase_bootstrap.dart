@@ -1,6 +1,5 @@
+import 'package:bloc_notes/core/config/app_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../config/app_config.dart';
 
 class SupabaseBootstrap {
   const SupabaseBootstrap._();

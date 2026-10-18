@@ -1,10 +1,9 @@
+import 'package:bloc_notes/core/config/app_config.dart';
+import 'package:bloc_notes/core/models/folder.dart';
+import 'package:bloc_notes/core/models/note.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../core/config/app_config.dart';
-import '../../../core/models/folder.dart';
-import '../../../core/models/note.dart';
 
 final notesRepositoryProvider = Provider<NotesRepository>((ref) {
   return NotesRepository();

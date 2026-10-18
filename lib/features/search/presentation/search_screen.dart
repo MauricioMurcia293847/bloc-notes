@@ -1,10 +1,9 @@
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/core/models/note.dart';
+import 'package:bloc_notes/features/notes/data/notes_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../app/theme/app_colors.dart';
-import '../../../core/models/note.dart';
-import '../../notes/data/notes_repository.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});

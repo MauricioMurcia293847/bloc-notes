@@ -1,7 +1,8 @@
+import 'dart:async';
+
+import 'package:bloc_notes/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../app/theme/app_colors.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -113,10 +114,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _goToPage(int index) {
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 260),
-      curve: Curves.easeOut,
+    unawaited(
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 260),
+        curve: Curves.easeOut,
+      ),
     );
   }
 

@@ -1,10 +1,9 @@
+import 'package:bloc_notes/app/preferences/app_preferences.dart';
+import 'package:bloc_notes/app/router/app_router.dart';
+import 'package:bloc_notes/app/theme/app_theme.dart';
+import 'package:bloc_notes/app/theme/theme_mode_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'router/app_router.dart';
-import 'preferences/app_preferences.dart';
-import 'theme/app_theme.dart';
-import 'theme/theme_mode_controller.dart';
 
 class BlocNotesApp extends ConsumerWidget {
   const BlocNotesApp({super.key});

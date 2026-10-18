@@ -1,12 +1,11 @@
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/core/config/app_config.dart';
+import 'package:bloc_notes/features/auth/presentation/auth_error_message.dart';
+import 'package:bloc_notes/shared/widgets/bloc_app_mark.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../app/theme/app_colors.dart';
-import '../../../core/config/app_config.dart';
-import '../../../shared/widgets/bloc_app_mark.dart';
-import 'auth_error_message.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key, this.notice});

@@ -1,11 +1,10 @@
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/features/auth/data/auth_state_controller.dart';
+import 'package:bloc_notes/features/auth/presentation/auth_error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../app/theme/app_colors.dart';
-import '../data/auth_state_controller.dart';
-import 'auth_error_message.dart';
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
   const ResetPasswordScreen({super.key});
