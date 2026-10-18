@@ -1,0 +1,37 @@
+name: Tarea
+description: Una actividad del roadmap (mejora, refactor, documentación, etc.).
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Después de crearla, asígnale su **milestone** (etapa) y una etiqueta de **prioridad**.
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto
+      description: ¿Qué pasa hoy y por qué vale la pena cambiarlo?
+    validations:
+      required: true
+  - type: textarea
+    id: que-hacer
+    attributes:
+      label: Qué hacer
+      description: Los pasos o cambios propuestos, de forma breve.
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      description: Condiciones verificables para dar la tarea por terminada.
+      value: |
+        - [ ] 
+    validations:
+      required: true
+  - type: checkboxes
+    id: sensible
+    attributes:
+      label: Cambios sensibles
+      options:
+        - label: Toca base de datos, seguridad o arquitectura (se revisa antes de implementar).
