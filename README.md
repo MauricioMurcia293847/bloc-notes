@@ -1,5 +1,7 @@
 # Bloc Notes
 
+[![CI](https://github.com/MauricioMurcia293847/bloc-notes/actions/workflows/ci.yml/badge.svg)](https://github.com/MauricioMurcia293847/bloc-notes/actions/workflows/ci.yml)
+
 Aplicacion movil de notas construida con Flutter y Supabase. Bloc busca una
 experiencia tranquila y clara para capturar ideas, escribir notas, crear listas,
 organizar contenido por carpetas y guardar imagenes.
@@ -227,6 +229,22 @@ Mas detalles:
 - `supabase/README.md`
 
 ## Comandos
+
+### Integración continua
+
+Cada pull request y cada push a `main` ejecutan
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) en GitHub Actions con
+Flutter 3.44.4. El PR solo queda en verde si pasan estos tres pasos, que puedes
+correr en local antes de subir cambios:
+
+```powershell
+dart format --output=none --set-exit-if-changed .
+flutter analyze
+flutter test
+```
+
+Si el primer paso falla, ejecuta `dart format .` para formatear los archivos
+y vuelve a hacer commit.
 
 Analisis:
 
