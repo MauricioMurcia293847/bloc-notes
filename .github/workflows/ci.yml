@@ -1,0 +1,51 @@
+# Integración continua de Bloc Notes.
+#
+# Se ejecuta en cada pull request y en cada push a main. Si algún paso falla,
+# el PR muestra una ✗ roja y sabemos que algo se rompió antes de hacer merge.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Si subes varios commits seguidos al mismo PR, cancelamos la ejecución
+# anterior para no gastar minutos en código que ya quedó viejo.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# El workflow solo necesita leer el repositorio.
+permissions:
+  contents: read
+
+jobs:
+  analyze-and-test:
+    name: Formato, análisis y tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      # Usamos la misma versión que en local (ver README > Requisitos) para que
+      # el formateador y el analizador den exactamente el mismo resultado.
+      - name: Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.44.4
+          cache: true
+
+      - name: Instalar dependencias
+        run: flutter pub get
+
+      - name: Revisar formato
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analizar el código
+        run: flutter analyze
+
+      - name: Ejecutar tests
+        run: flutter test

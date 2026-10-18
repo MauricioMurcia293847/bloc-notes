@@ -39,9 +39,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       loading: () => const Scaffold(
         body: SafeArea(child: Center(child: CircularProgressIndicator())),
       ),
-      error: (_, _) => _SearchErrorState(
-        onRetry: () => ref.invalidate(notesProvider),
-      ),
+      error: (_, _) =>
+          _SearchErrorState(onRetry: () => ref.invalidate(notesProvider)),
     );
   }
 

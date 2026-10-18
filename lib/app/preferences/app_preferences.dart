@@ -8,9 +8,10 @@ final notesSortProvider = NotifierProvider<NotesSortController, NotesSortOrder>(
   NotesSortController.new,
 );
 
-final notesViewModeProvider = NotifierProvider<NotesViewModeController, NotesViewMode>(
-  NotesViewModeController.new,
-);
+final notesViewModeProvider =
+    NotifierProvider<NotesViewModeController, NotesViewMode>(
+      NotesViewModeController.new,
+    );
 
 enum AppTextSize {
   small('Pequeno', 0.94),
@@ -51,10 +52,7 @@ class NotesSortController extends Notifier<NotesSortOrder> {
   }
 }
 
-enum NotesViewMode {
-  grid,
-  list,
-}
+enum NotesViewMode { grid, list }
 
 class NotesViewModeController extends Notifier<NotesViewMode> {
   @override

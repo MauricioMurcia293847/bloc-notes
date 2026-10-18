@@ -166,16 +166,14 @@ class _HomeContent extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         IconButton.filledTonal(
-                          onPressed: () => onViewModeChanged(
-                            NotesViewMode.grid,
-                          ),
+                          onPressed: () =>
+                              onViewModeChanged(NotesViewMode.grid),
                           icon: const Icon(Icons.grid_view_rounded),
                           isSelected: viewMode == NotesViewMode.grid,
                         ),
                         IconButton(
-                          onPressed: () => onViewModeChanged(
-                            NotesViewMode.list,
-                          ),
+                          onPressed: () =>
+                              onViewModeChanged(NotesViewMode.list),
                           icon: const Icon(Icons.view_agenda_outlined),
                           isSelected: viewMode == NotesViewMode.list,
                         ),
@@ -565,9 +563,8 @@ class _NoteListTile extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: () => context.push(
-        note.id == null ? '/editor' : '/editor?id=${note.id}',
-      ),
+      onTap: () =>
+          context.push(note.id == null ? '/editor' : '/editor?id=${note.id}'),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

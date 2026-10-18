@@ -33,11 +33,8 @@ class TrashScreen extends ConsumerWidget {
                   itemBuilder: (context, index) => _DeletedNoteTile(
                     note: notes[index],
                     onRestore: () => _restoreNote(context, ref, notes[index]),
-                    onDelete: () => _confirmPermanentDelete(
-                      context,
-                      ref,
-                      notes[index],
-                    ),
+                    onDelete: () =>
+                        _confirmPermanentDelete(context, ref, notes[index]),
                   ),
                   separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemCount: notes.length,
@@ -67,9 +64,9 @@ class TrashScreen extends ConsumerWidget {
       ref.invalidate(deletedNotesProvider);
 
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Nota restaurada.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Nota restaurada.')));
       }
     } catch (_) {
       if (context.mounted) {
@@ -80,11 +77,7 @@ class TrashScreen extends ConsumerWidget {
     }
   }
 
-  void _confirmPermanentDelete(
-    BuildContext context,
-    WidgetRef ref,
-    Note note,
-  ) {
+  void _confirmPermanentDelete(BuildContext context, WidgetRef ref, Note note) {
     showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(

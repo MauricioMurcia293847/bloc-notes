@@ -83,40 +83,42 @@ class NoteCard extends StatelessWidget {
                 ),
                 SizedBox(height: compactImage ? 5 : 8),
                 if (note.checklistItems.isNotEmpty)
-                  ...note.checklistItems.take(checklistLimit).map(
-                    (item) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Row(
-                        children: [
-                          Icon(
-                            item.isDone
-                                ? Icons.check_box_rounded
-                                : Icons.check_box_outline_blank_rounded,
-                            color: item.isDone ? AppColors.sage : muted,
-                            size: 17,
-                          ),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              item.label,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                decoration: item.isDone
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                color: item.isDone
-                                    ? muted
-                                    : Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium?.color,
+                  ...note.checklistItems
+                      .take(checklistLimit)
+                      .map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Row(
+                            children: [
+                              Icon(
+                                item.isDone
+                                    ? Icons.check_box_rounded
+                                    : Icons.check_box_outline_blank_rounded,
+                                color: item.isDone ? AppColors.sage : muted,
+                                size: 17,
                               ),
-                            ),
+                              const SizedBox(width: 6),
+                              Expanded(
+                                child: Text(
+                                  item.label,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    decoration: item.isDone
+                                        ? TextDecoration.lineThrough
+                                        : null,
+                                    color: item.isDone
+                                        ? muted
+                                        : Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium?.color,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  )
+                        ),
+                      )
                 else
                   Text(
                     note.preview,
