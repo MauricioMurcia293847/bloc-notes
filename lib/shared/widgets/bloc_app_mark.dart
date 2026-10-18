@@ -1,6 +1,5 @@
+import 'package:bloc_notes/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../app/theme/app_colors.dart';
 
 class BlocAppMark extends StatelessWidget {
   const BlocAppMark({super.key, this.size = 48});

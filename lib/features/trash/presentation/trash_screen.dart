@@ -1,10 +1,9 @@
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/core/models/note.dart';
+import 'package:bloc_notes/features/notes/data/notes_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../app/theme/app_colors.dart';
-import '../../../core/models/note.dart';
-import '../../notes/data/notes_repository.dart';
 
 class TrashScreen extends ConsumerWidget {
   const TrashScreen({super.key});
@@ -77,8 +76,12 @@ class TrashScreen extends ConsumerWidget {
     }
   }
 
-  void _confirmPermanentDelete(BuildContext context, WidgetRef ref, Note note) {
-    showDialog<void>(
+  Future<void> _confirmPermanentDelete(
+    BuildContext context,
+    WidgetRef ref,
+    Note note,
+  ) async {
+    await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

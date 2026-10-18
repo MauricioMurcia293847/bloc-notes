@@ -1,16 +1,17 @@
+import 'dart:async';
+
 import 'dart:io';
 
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/core/config/app_config.dart';
+import 'package:bloc_notes/core/models/folder.dart';
+import 'package:bloc_notes/core/models/note.dart';
+import 'package:bloc_notes/features/notes/data/notes_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../app/theme/app_colors.dart';
-import '../../../core/config/app_config.dart';
-import '../../../core/models/folder.dart';
-import '../../../core/models/note.dart';
-import '../../notes/data/notes_repository.dart';
 
 class EditorScreen extends ConsumerStatefulWidget {
   const EditorScreen({super.key, this.noteId});
@@ -47,7 +48,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     super.initState();
     _noteId = widget.noteId;
     if (_noteId != null) {
-      _loadNote();
+      unawaited(_loadNote());
     }
   }
 
@@ -688,12 +689,12 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     }
   }
 
-  void _showDeleteDialog(BuildContext context) {
+  Future<void> _showDeleteDialog(BuildContext context) async {
     final title = _titleController.text.trim().isEmpty
         ? 'esta nota'
         : '"${_titleController.text.trim()}"';
 
-    showDialog<void>(
+    await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -714,9 +715,9 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () {
+              onPressed: () async {
                 dialogContext.pop();
-                _deleteNote();
+                await _deleteNote();
               },
               style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
               child: const Text('Mover a papelera'),

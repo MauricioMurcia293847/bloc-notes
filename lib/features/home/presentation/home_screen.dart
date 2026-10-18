@@ -1,15 +1,14 @@
+import 'package:bloc_notes/app/preferences/app_preferences.dart';
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/core/config/app_config.dart';
+import 'package:bloc_notes/core/models/folder.dart';
+import 'package:bloc_notes/core/models/note.dart';
+import 'package:bloc_notes/features/notes/data/notes_repository.dart';
+import 'package:bloc_notes/shared/widgets/note_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../app/preferences/app_preferences.dart';
-import '../../../app/theme/app_colors.dart';
-import '../../../core/config/app_config.dart';
-import '../../../core/models/folder.dart';
-import '../../../core/models/note.dart';
-import '../../notes/data/notes_repository.dart';
-import '../../../shared/widgets/note_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

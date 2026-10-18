@@ -1,8 +1,7 @@
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/core/models/note.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../app/theme/app_colors.dart';
-import '../../core/models/note.dart';
 
 class NoteCard extends StatelessWidget {
   const NoteCard({super.key, required this.note});

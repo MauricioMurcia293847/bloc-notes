@@ -1,13 +1,12 @@
+import 'package:bloc_notes/app/preferences/app_preferences.dart';
+import 'package:bloc_notes/app/theme/app_colors.dart';
+import 'package:bloc_notes/app/theme/theme_mode_controller.dart';
+import 'package:bloc_notes/features/notes/data/notes_repository.dart';
+import 'package:bloc_notes/features/settings/data/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../app/preferences/app_preferences.dart';
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/theme_mode_controller.dart';
-import '../../notes/data/notes_repository.dart';
-import '../data/profile_repository.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -152,10 +151,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  void _showFolders() {
+  Future<void> _showFolders() async {
     final foldersState = ref.read(foldersProvider);
 
-    showModalBottomSheet<void>(
+    await showModalBottomSheet<void>(
       context: context,
       builder: (context) => SafeArea(
         child: Padding(
@@ -226,8 +225,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Color(int.parse('FF$colorText', radix: 16));
   }
 
-  void _showTextSizeOptions() {
-    showModalBottomSheet<void>(
+  Future<void> _showTextSizeOptions() async {
+    await showModalBottomSheet<void>(
       context: context,
       builder: (context) => _OptionSheet<AppTextSize>(
         title: 'Tamano de texto',
@@ -242,8 +241,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  void _showSortOptions() {
-    showModalBottomSheet<void>(
+  Future<void> _showSortOptions() async {
+    await showModalBottomSheet<void>(
       context: context,
       builder: (context) => _OptionSheet<NotesSortOrder>(
         title: 'Ordenar notas',
@@ -259,8 +258,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  void _showEditProfile(UserProfile profile) {
-    showModalBottomSheet<void>(
+  Future<void> _showEditProfile(UserProfile profile) async {
+    await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (sheetContext) => _EditProfileSheet(
@@ -273,8 +272,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  void _confirmSignOut() {
-    showDialog<void>(
+  Future<void> _confirmSignOut() async {
+    await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

@@ -1,30 +1,4 @@
 class Note {
-  const Note({
-    this.id,
-    this.folderId,
-    required this.title,
-    required this.preview,
-    required this.folder,
-    required this.dateLabel,
-    this.reminderLabel,
-    this.isPinned = false,
-    this.isChecklist = false,
-    this.checklistItems = const [],
-    this.imageUrls = const [],
-  });
-
-  final String? id;
-  final String? folderId;
-  final String title;
-  final String preview;
-  final String folder;
-  final String dateLabel;
-  final String? reminderLabel;
-  final bool isPinned;
-  final bool isChecklist;
-  final List<ChecklistItem> checklistItems;
-  final List<String> imageUrls;
-
   factory Note.fromSupabase(Map<String, dynamic> row) {
     final folder = row['folder'] ?? row['folders'];
     final folderId = row['folder_id'] as String?;
@@ -54,6 +28,31 @@ class Note {
       imageUrls: _imageUrls(row['image_urls']),
     );
   }
+  const Note({
+    this.id,
+    this.folderId,
+    required this.title,
+    required this.preview,
+    required this.folder,
+    required this.dateLabel,
+    this.reminderLabel,
+    this.isPinned = false,
+    this.isChecklist = false,
+    this.checklistItems = const [],
+    this.imageUrls = const [],
+  });
+
+  final String? id;
+  final String? folderId;
+  final String title;
+  final String preview;
+  final String folder;
+  final String dateLabel;
+  final String? reminderLabel;
+  final bool isPinned;
+  final bool isChecklist;
+  final List<ChecklistItem> checklistItems;
+  final List<String> imageUrls;
 }
 
 List<String> _imageUrls(Object? value) {
@@ -84,6 +83,14 @@ String _folderName(Object? folder, {String? folderId}) {
 }
 
 class ChecklistItem {
+  factory ChecklistItem.fromSupabase(Map<String, dynamic> row) {
+    return ChecklistItem(
+      id: row['id'] as String?,
+      label: row['content'] as String? ?? '',
+      isDone: row['is_done'] as bool? ?? false,
+      position: row['position'] as int? ?? 0,
+    );
+  }
   const ChecklistItem({
     this.id,
     required this.label,
@@ -95,15 +102,6 @@ class ChecklistItem {
   final String label;
   final bool isDone;
   final int position;
-
-  factory ChecklistItem.fromSupabase(Map<String, dynamic> row) {
-    return ChecklistItem(
-      id: row['id'] as String?,
-      label: row['content'] as String? ?? '',
-      isDone: row['is_done'] as bool? ?? false,
-      position: row['position'] as int? ?? 0,
-    );
-  }
 }
 
 String _formatDateLabel(String? value) {
