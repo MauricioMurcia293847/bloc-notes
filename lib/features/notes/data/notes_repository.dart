@@ -171,11 +171,7 @@ class NotesRepository {
       values['image_urls'] = imageUrls;
     }
 
-    final row = await client
-        .from('notes')
-        .insert(values)
-        .select('id')
-        .single();
+    final row = await client.from('notes').insert(values).select('id').single();
 
     final noteId = row['id'] as String?;
     if (noteId != null && isChecklist) {
@@ -226,10 +222,7 @@ class NotesRepository {
       values['image_urls'] = imageUrls;
     }
 
-    await client
-        .from('notes')
-        .update(values)
-        .eq('id', id);
+    await client.from('notes').update(values).eq('id', id);
 
     await _replaceChecklistItems(
       client,

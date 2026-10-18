@@ -46,10 +46,10 @@ class Note {
       isChecklist: row['note_type'] == 'checklist',
       checklistItems: rawItems is List
           ? (rawItems
-                  .whereType<Map<String, dynamic>>()
-                  .map(ChecklistItem.fromSupabase)
-                  .toList()
-                ..sort((a, b) => a.position.compareTo(b.position)))
+                .whereType<Map<String, dynamic>>()
+                .map(ChecklistItem.fromSupabase)
+                .toList()
+              ..sort((a, b) => a.position.compareTo(b.position)))
           : const [],
       imageUrls: _imageUrls(row['image_urls']),
     );

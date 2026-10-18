@@ -68,8 +68,8 @@ class AuthStateController extends ChangeNotifier {
   void _handleAuthLink(Uri uri) {
     final fragmentParameters = Uri.splitQueryString(uri.fragment);
     final type = uri.queryParameters['type'] ?? fragmentParameters['type'];
-    final isResetLink = uri.scheme == 'blocnotes' &&
-        uri.host == 'reset-password';
+    final isResetLink =
+        uri.scheme == 'blocnotes' && uri.host == 'reset-password';
 
     if (isResetLink || type == 'recovery') {
       _isPasswordRecovery = true;
